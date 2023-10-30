@@ -58,10 +58,13 @@ public class LoginTests extends BaseTest {
 
     @Test(dataProvider = "excel-data")
     public void search(String keyword1, String keyword2){
-        WebElement txtBox = driver.findElement(By.tagName("//input[@class='gLFYf gsfi']"));
-        txtBox.sendKeys(keyword1,keyword2);
+        provideEmail(keyword1);
+        providePassword(keyword2);
+        //WebElement txtBox = driver.findElement(By.tagName("//input[@class='gLFYf gsfi']"));
+        //txtBox.sendKeys(keyword1,keyword2);
         Reporter.log("KeyWord Entered is: "+keyword1+ " " +keyword2);
-        txtBox.sendKeys(Keys.ENTER);
+        //txtBox.sendKeys(Keys.ENTER);
+        clickSubmit();
         Reporter.log("Search results are displayed.");
     }
 
