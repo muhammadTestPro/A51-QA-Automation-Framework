@@ -2,12 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Smoke">
-
+    <parameter name="BaseURL" value="https://qa.koel.app"></parameter>
     <test name="Smoke Test" preserve-order="false">
         <classes>
             <class name="LoginTests">
                 <methods>
-                    <include name="loginValidEmailPassword"/>
+                    <!-- <include name="loginValidEmailPassword"/> -->
+                    <!--<include name="loginTests"/> -->
+                    <include name="search"/>
                 </methods>
             </class>
         </classes>
