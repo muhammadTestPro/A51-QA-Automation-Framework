@@ -33,7 +33,9 @@ public class BaseTest {
 
     @DataProvider(name="excel-data")
     public Object[][] excelDP() throws IOException {
-        Object[][] arrObj = getExcelData("test.xlsx", "test.xlsx");
+        Object [][] arrObj;
+        //Object[][] arrObj = getExcelData("./src/test/resources/test.xlsx", "test.xlsx");
+        arrObj = getExcelData("./src/test/resources/test.xlsx", "Sheet1");
         return arrObj;
     }
 
