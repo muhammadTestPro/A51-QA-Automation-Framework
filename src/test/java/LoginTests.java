@@ -1,9 +1,7 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginTests extends BaseTest {
@@ -57,15 +55,26 @@ public class LoginTests extends BaseTest {
     }
 
     @Test(dataProvider = "excel-data")
-    public void search(String keyword1, String keyword2){
-        provideEmail(keyword1);
-        providePassword(keyword2);
-        //WebElement txtBox = driver.findElement(By.tagName("//input[@class='gLFYf gsfi']"));
-        //txtBox.sendKeys(keyword1,keyword2);
-        Reporter.log("KeyWord Entered is: "+keyword1+ " " +keyword2);
-        //txtBox.sendKeys(Keys.ENTER);
+    public void loginWithExcelData(String email, String password){
+        try{
+        //Step 1 Enter EMail
+        Thread.sleep(2000);
+        provideEmail(email);
+        //Step 2: Enter Password
+        providePassword(password);
+        Thread.sleep(2000);
+
+        //Step 3: Click on Submit.
         clickSubmit();
-        Reporter.log("Search results are displayed.");
+        Thread.sleep(2000);
+
+        WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
+        //Expected Result
+        Assert.assertTrue(avatar.isDisplayed());
+
+        } catch(Exception e){
+            Reporter.log("Unable to login with Excel Data for an unknown reason." +e);
+        }
     }
 
 
