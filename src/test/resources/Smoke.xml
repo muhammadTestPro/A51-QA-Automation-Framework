@@ -9,7 +9,7 @@
                 <methods>
                     <!-- <include name="loginValidEmailPassword"/> -->
                     <!--<include name="loginTests"/> -->
-                    <include name="search"/>
+                    <include name="loginWithExcelData"/>
                 </methods>
             </class>
         </classes>
