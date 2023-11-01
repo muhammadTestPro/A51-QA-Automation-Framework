@@ -79,5 +79,9 @@ public class LoginTests extends BaseTest {
         }
     }
 
+    public void waitForAnElementToBeVisible(String cssLocator){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
+    }
+
 
 }
