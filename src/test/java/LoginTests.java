@@ -4,6 +4,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
 
@@ -65,18 +67,25 @@ public class LoginTests extends BaseTest {
         //Step 2: Enter Password
         providePassword(password);
         Thread.sleep(2000);
-
         //Step 3: Click on Submit.
         clickSubmit();
         Thread.sleep(2000);
-
         WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
         //Expected Result
         Assert.assertTrue(avatar.isDisplayed());
-
         } catch(Exception e){
             Reporter.log("Unable to login with Excel Data for an unknown reason." +e);
         }
+    }
+
+    @Test
+    public void LoginValidEmailPasswordTest(){
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        loginPage.provideEmail("demo@class.com");
+        loginPage.providePassword("te$t$tudent");
+        loginPage.clickSubmit();
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
     public void waitForAnElementToBeVisible(String cssLocator){
