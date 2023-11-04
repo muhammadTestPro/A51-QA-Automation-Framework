@@ -25,6 +25,18 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 
 public class BaseTest {
 
+    //References start here
+
+
+    public static WebDriver driver = null;
+    public static String url = null;
+
+    public static WebDriverWait wait = null;
+
+    public static Actions actions = null;
+
+    //References End here
+
     // DataProviders Start here
 
     @DataProvider(name="LoginData")
@@ -46,19 +58,6 @@ public class BaseTest {
     }
 
     // DataProviders End here
-
-    //References start here
-
-
-    public WebDriver driver;
-    public String url = "https://qa.koel.app";
-
-    public WebDriverWait wait;
-
-    Actions actions;
-
-    //References End here
-
 
     @BeforeSuite
     static void setupClass() {
