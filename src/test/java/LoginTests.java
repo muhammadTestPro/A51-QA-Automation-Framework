@@ -88,6 +88,18 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
+    @Test
+    public void LoginValidEmailPasswordTestByPageFactory() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        
+        loginPage.provideEmailToLogin("demo@class.com")
+                .providePasswordToLogin("te$t$tudent")
+                .clickSubmitBtnToLogin();
+
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+    }
+
     public void waitForAnElementToBeVisible(String cssLocator){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
     }
