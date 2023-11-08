@@ -88,6 +88,10 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
+    /**
+     * With Fluent Interface and Selenium Page Factory
+     * @throws InterruptedException
+     */
     @Test
     public void LoginValidEmailPasswordTestByPageFactory() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
