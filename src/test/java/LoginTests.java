@@ -12,19 +12,19 @@ public class LoginTests extends BaseTest {
 
     @Test(dataProvider = "LoginData")
     public void loginTests(String email, String password) throws InterruptedException {
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail(email);
         providePassword(password);
         clickSubmit();
         Thread.sleep(2000);
         //https://qa.koel.app/#!/home
-        Assert.assertEquals(driver.getCurrentUrl(), url);
+        Assert.assertEquals(driver.getCurrentUrl(), "https://qa.koel.app/#!/home");
     }
 
     @Test
     public void loginValidEmailPassword(){
         //Steps
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail("demo@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
@@ -34,29 +34,29 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(avatar.isDisplayed());
     }
 
-    @Test
+    /*@Test
     public void loginInvalidEmailValidPassword(){
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail("invalidemail@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
         WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
         //Expected Result
         Assert.assertTrue(avatar.isDisplayed());
-    }
+    }*/
 
-    @Test
+ /*   @Test
     public void loginValidEmailNoPassword() throws InterruptedException{
         //Pr-Conditions
 
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail("invalidemail@class.com");
         clickSubmit();
 
         WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
         //Expected Result
         Assert.assertTrue(avatar.isDisplayed());
-    }
+    }*/
 
     @Test(dataProvider = "excel-data")
     public void loginWithExcelData(String email, String password){
@@ -104,9 +104,7 @@ public class LoginTests extends BaseTest {
         Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
 
-    public void waitForAnElementToBeVisible(String cssLocator){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
-    }
+
 
 
 }

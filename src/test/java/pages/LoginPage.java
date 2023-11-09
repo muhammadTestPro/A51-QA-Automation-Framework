@@ -67,4 +67,8 @@ public class LoginPage extends BasePage{
         clickSubmit();
     }
 
+    /* public void waitForAnElementToBeVisible(String cssLocator){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
+    }*/
+
 }

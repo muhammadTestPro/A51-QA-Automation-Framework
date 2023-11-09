@@ -42,6 +42,7 @@ public class HomeTest extends BaseTest{
         loginPage.provideEmail("demo@class.com");
         loginPage.providePassword("te$t$tudent");
         loginPage.clickSubmit();
+        Thread.sleep(2000);
         homePage.chooseAllSongsList();
         songsPage.contextClickFirstSong();
         songsPage.choosePlayOption();
