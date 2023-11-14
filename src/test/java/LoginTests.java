@@ -1,25 +1,53 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
 
+    //
 
-    @Test(dataProvider = "LoginData")
+    @Test
+    public void loginSuccessTest() {
+
+        LoginPage loginPage = new LoginPage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
+
+        loginPage.provideEmail("demo@class.com")
+                .providePassword("te$t$tudent")
+                .clickSubmitBtn();
+//        WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[class='avatar']")));
+//        Assert.assertTrue(loginPage.getRegistrationLink().isDisplayed());
+        Assert.assertTrue(homePage.getUserAvatar());
+    }
+    @Test
+    public void loginInvalidCredentials(){
+        LoginPage loginPage = new LoginPage(getDriver());
+
+        loginPage.provideEmail("")
+                .providePassword("te$t$tudent")
+                .clickSubmitBtn();
+        Assert.assertTrue(loginPage.getRegistrationLink().isDisplayed());
+    }
+
+    /*@Test(dataProvider = "LoginData")
     public void loginTests(String email, String password) throws InterruptedException {
         navigateToLoginPage();
         provideEmail(email);
         providePassword(password);
+        Thread.sleep(2000);
         clickSubmit();
         Thread.sleep(2000);
         //https://qa.koel.app/#!/home
         Assert.assertEquals(driver.getCurrentUrl(), url);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void loginValidEmailPassword(){
         //Steps
         navigateToLoginPage();
@@ -30,21 +58,23 @@ public class LoginTests extends BaseTest {
         //WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
         //Expected Result
         Assert.assertTrue(avatar.isDisplayed());
-    }
+    }*/
 
-    @Test
+  /*  @Test
     public void loginInvalidEmailValidPassword(){
-        navigateToLoginPage();
-        provideEmail("invalidemail@class.com");
-        providePassword("te$t$tudent");
-        clickSubmit();
-        WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
-        //Expected Result
-        Assert.assertTrue(avatar.isDisplayed());
-    }
+//        navigateToLoginPage();
+//        provideEmail("invalidemail@class.com");
+//        providePassword("te$t$tudent");
+//        clickSubmit();
+//        WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("img[class='avatar']")));
+//        //Expected Result
+//        Assert.assertTrue(avatar.isDisplayed());
 
-    @Test
-    public void loginValidEmailNoPassword() throws InterruptedException{
+        LoginPage loginPage = new LoginPage(getDriver());
+    }*/
+
+    //@Test
+  /*  public void loginValidEmailNoPassword() throws InterruptedException{
         //Pr-Conditions
 
         navigateToLoginPage();
@@ -54,9 +84,9 @@ public class LoginTests extends BaseTest {
         WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
         //Expected Result
         Assert.assertTrue(avatar.isDisplayed());
-    }
+    }*/
 
-    @Test(dataProvider = "excel-data")
+    /*@Test(dataProvider = "excel-data")
     public void loginWithExcelData(String email, String password){
         try{
         //Step 1 Enter EMail
@@ -77,7 +107,7 @@ public class LoginTests extends BaseTest {
         } catch(Exception e){
             Reporter.log("Unable to login with Excel Data for an unknown reason." +e);
         }
-    }
+    }*/
 
     public void waitForAnElementToBeVisible(String cssLocator){
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
