@@ -1,8 +1,10 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 
 public class LoginPage extends BasePage {
 
@@ -75,3 +77,4 @@ public class LoginPage extends BasePage {
 // The "clicklogOut" method clicks on the "logOutLocator" element (the logout element)
 // and returns an instance of the "LoginPage" class.
 }
+

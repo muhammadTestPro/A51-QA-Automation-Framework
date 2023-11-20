@@ -37,20 +37,24 @@ public class LoginTests extends BaseTest {
 
     /*@Test(dataProvider = "LoginData")
     public void loginTests(String email, String password) throws InterruptedException {
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail(email);
         providePassword(password);
         Thread.sleep(2000);
         clickSubmit();
         Thread.sleep(2000);
         //https://qa.koel.app/#!/home
+
         Assert.assertEquals(driver.getCurrentUrl(), url);
     }*/
+
+    }
+
 
     /*@Test
     public void loginValidEmailPassword(){
         //Steps
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail("demo@class.com");
         providePassword("te$t$tudent");
         clickSubmit();
@@ -75,9 +79,22 @@ public class LoginTests extends BaseTest {
 
     //@Test
   /*  public void loginValidEmailNoPassword() throws InterruptedException{
+    /*@Test
+    public void loginInvalidEmailValidPassword(){
+        //navigateToLoginPage();
+        provideEmail("invalidemail@class.com");
+        providePassword("te$t$tudent");
+        clickSubmit();
+        WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
+        //Expected Result
+        Assert.assertTrue(avatar.isDisplayed());
+    }*/
+
+ /*   @Test
+    public void loginValidEmailNoPassword() throws InterruptedException{
         //Pr-Conditions
 
-        navigateToLoginPage();
+        //navigateToLoginPage();
         provideEmail("invalidemail@class.com");
         clickSubmit();
 
@@ -95,23 +112,44 @@ public class LoginTests extends BaseTest {
         //Step 2: Enter Password
         providePassword(password);
         Thread.sleep(2000);
-
         //Step 3: Click on Submit.
         clickSubmit();
         Thread.sleep(2000);
-
         WebElement avatar = driver.findElement(By.cssSelector("img[class='avatar']"));
         //Expected Result
         Assert.assertTrue(avatar.isDisplayed());
-
         } catch(Exception e){
             Reporter.log("Unable to login with Excel Data for an unknown reason." +e);
         }
     }*/
 
-    public void waitForAnElementToBeVisible(String cssLocator){
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("")));
+    @Test
+    public void LoginValidEmailPasswordTest(){
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        loginPage.provideEmail("demo@class.com");
+        loginPage.providePassword("te$t$tudent");
+        loginPage.clickSubmit();
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
     }
+
+    /**
+     * With Fluent Interface and Selenium Page Factory
+     * @throws InterruptedException
+     */
+    @Test
+    public void LoginValidEmailPasswordTestByPageFactory() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        
+        loginPage.provideEmailToLogin("demo@class.com")
+                .providePasswordToLogin("te$t$tudent")
+                .clickSubmitBtnToLogin();
+
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+    }
+
+
 
 
 }

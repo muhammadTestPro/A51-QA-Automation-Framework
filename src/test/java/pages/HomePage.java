@@ -38,6 +38,7 @@ public class HomePage extends BasePage {
     private WebElement chooseCreateNewPlaylist;
     // chooseCreateNewPlaylist: Represents the element on the page used for selecting to create a new playlist.
 
+
     public HomePage(WebDriver givenDriver) {
         super(givenDriver);
     }
@@ -75,4 +76,20 @@ public class HomePage extends BasePage {
 // It uses the "findElement" method to locate the "notification" element.
 // It returns a boolean value (true or false) depending on whether the "notification" element is displayed on the page.
 // If the element is displayed, the method returns true; otherwise, it returns false.
+}
+
+    By userAvatarIcon = By.cssSelector("img.avatar");
+
+    public WebElement getUserAvatar(){
+        return findElement(userAvatarIcon);
+    }
+
+    public WebElement hoverPlay() throws InterruptedException {
+        //WebElement play = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='play-btn']")));
+        WebElement play = driver.findElement(By.cssSelector("[data-testid='play-btn']"));
+        actions.moveToElement(play).perform();
+        return  wait.until(ExpectedConditions.visibilityOf(play));
+    }
+
+
 }
