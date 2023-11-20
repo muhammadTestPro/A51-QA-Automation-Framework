@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
 
 
@@ -67,15 +68,116 @@ public class BaseTest {
 
     // DataProviders End here
 
+
+    //References start here
+
+
+    public static WebDriver driver = null;
+    public String url = "https://qa.koel.app";
+
+    public static WebDriverWait wait = null;
+
+    public static Actions actions = null;
+
+    private static final ThreadLocal <WebDriver> threadDriver = new ThreadLocal<>();
+
+    //References End here
+
+
+
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
         //WebDriverManager.firefoxdriver().setup();
-
     }
 
     @BeforeMethod
     @Parameters({"BaseURL"})
+    public void setupBrowser(String BaseURL) throws MalformedURLException {
+        threadDriver.set(pickBrowser(System.getProperty("browser")));
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        navigateToLoginPage(BaseURL);
+    }
+
+    public static WebDriver getDriver(){
+        return threadDriver.get();
+    }
+
+//    @BeforeMethod
+//    @Parameters({"BaseURL"})
+//    public void launchBrowser(String BaseURL) throws MalformedURLException {
+//        driver = pickBrowser(System.getProperty("browser"));
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        actions = new Actions(driver);
+//        driver.manage().window().maximize();
+//        navigateToLoginPage(BaseURL);
+//    }
+
+    public static WebDriver pickBrowser(String browser) throws MalformedURLException {
+
+        DesiredCapabilities caps = new DesiredCapabilities();
+        String gridURL = "http://10.0.0.206:4444";
+
+        switch (browser){
+
+            case "firefox":
+                WebDriverManager.firefoxdriver().setup();
+                return driver = new FirefoxDriver();
+            case "MicrosoftEdge":
+                WebDriverManager.edgedriver().setup();
+                EdgeOptions edgeOptions = new EdgeOptions();
+                edgeOptions.addArguments("--remote-allow-origins=*");
+                return driver = new EdgeDriver(edgeOptions);
+
+            //Selenium Grid
+            case "grid-edge": // gradle cleam test -Dbrowser=grid-edge
+                caps.setCapability("browser", "MicrosoftEdge");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(),caps);
+
+            case "grid-firefox": // gradle clean test -Dbrowser=grid-firefox
+            caps.setCapability("browserName", "firefox");
+            return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+
+            case "grid-chrome": // gradle clean test -Dbrowser=grid-chrome
+                caps.setCapability("browserName", "chrome");
+                return driver = new RemoteWebDriver(URI.create(gridURL).toURL(), caps);
+
+            case "cloud":
+                return lambdaTest();
+
+            default:
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--remote-allow-origins=*");
+                return driver = new ChromeDriver(options);
+        }
+    }
+
+    public static WebDriver lambdaTest() throws MalformedURLException {
+        String username = "muhammadtestpro";
+        String authKey = "SE8iAUT7KcFw8hrr9shssoC2PQCg4CTki1fpmP3OX6VDNr5ksJ";
+        String hub = "@hub.lambdatest.com/wd/hub";
+
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("platform", "Windows 10");
+        caps.setCapability("browserName", "Chrome");
+        caps.setCapability("version", "120.0");
+        caps.setCapability("resolution", "12024x768");
+        caps.setCapability("build", "TestNG with Java");
+        caps.setCapability("name", BaseTest.class.getName());
+        caps.setCapability("plugin", "java-testNG");
+        //caps.setCapability("plugin", "java-testNG");
+
+
+        return new RemoteWebDriver(new URL("https://" +username+ ":" +authKey + hub), caps);
+    }
+
+
+//    @AfterMethod
+//    public void closeBrowser(){
+//        driver.quit();
+//    }
+
     public void launchBrowser(String BaseURL) throws MalformedURLException {
         //ChromeOptions options = new ChromeOptions();
         //options.addArguments("--remote-allow-origins=*");
@@ -127,8 +229,9 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void closeBrowser(){
-        driver.quit();
+    public void tearDown(){
+        threadDriver.get().close();
+        threadDriver.remove();
     }
 
 
@@ -137,7 +240,7 @@ public class BaseTest {
     }
 
     public void navigateToLoginPage(String BaseURL){
-        driver.get(BaseURL);
+        getDriver().get(BaseURL);
     }
 
     public void provideEmail(String email){

@@ -18,6 +18,7 @@ public class ProfileTests extends BaseTest {
         Thread.sleep(2000);
         //Click on Avatar to go to Profile Page
         clickAvatar();
+        Thread.sleep(2000);
         provideCurrentPassword("te$t$tudent");
         //Enter Random Name
         String randomName = generateRandomName();
